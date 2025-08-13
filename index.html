@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BenchPro - Premium Bench Accessories</title>
+    <link href="https://fonts.googleapis.com/css2?family=Wendy+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Wendy One', sans-serif;
+            background: linear-gradient(135deg, #E77436 0%, #E7CD36 50%, #A9E736 100%);
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.5s ease;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .navbar.scrolled {
+            background: rgba(231, 116, 54, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 15px 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        
+        .navbar.scrolled .logo {
+            transform: scale(0.9);
+            color: white !important;
+        }
+        
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        
+        .logo:hover {
+            color: #E7CD36 !important;
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+            align-items: center;
+        }
+        
+        .nav-links li {
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-links li:hover {
+            transform: translateY(-2px);
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            padding: 8px 15px;
+            border-radius: 20px;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+            color: #E7CD36;
+            transform: scale(1.05);
+        }
+        
+        .nav-links a.active {
+            background: linear-gradient(45deg, #E7CD36, #A9E736);
+            color: white;
+        }
+        
+        .cart-btn {
+            background: white;
+            color: #E77436;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Wendy One', sans-serif;
+            font-weight: bold;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cart-btn:hover {
+            background: linear-gradient(45deg, #E77436, #E7CD36);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(231, 116, 54, 0.4);
+        }
+        
+        .cart-count {
+            background: #E77436;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.8rem;
+            margin-left: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .cart-btn:hover .cart-count {
+            background: white;
+            color: #E77436;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 150px 20px 100px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.1);
+            margin: 20px;
+            margin-top: 100px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.6s ease;
+        }
+        
+        .hero:hover {
+            background: rgba(255,255,255,0.1);
+            transform: scale(1.02);
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease-out;
+            transition: color 0.5s ease;
+        }
+        
+        .hero:hover h1 {
+            color: #E7CD36;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+            transition: color 0.5s ease;
+        }
+        
+        .hero:hover p {
+            color: #A9E736;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.6s both;
+            transition: all 0.5s ease;
+        }
+        
+        .hero:hover .hero-subtitle {
+            opacity: 1;
+            color: #E77436;
+        }
+        
+        .hero-btn {
+            background: linear-gradient(45deg, #E77436, #E7CD36);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-family: 'Wendy One', sans-serif;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+        
+        .hero-btn:hover {
+            background: linear-gradient(45deg, #A9E736, #E7CD36, #E77436);
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(231, 116, 54, 0.4);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section {
+            padding: 80px 20px;
+            margin: 20px;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .products {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 40px 20px;
+            flex-wrap: wrap;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            width: 300px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.5s ease;
+            border-top: 5px solid #E77436;
+            text-align: center;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            background: linear-gradient(135deg, #fff 0%, #f8f8f8 100%);
+            box-shadow: 0 20px 40px rgba(231, 116, 54, 0.3);
+            border-top-color: #A9E736;
+        }
+        
+        .product-card:nth-child(2) {
+            border-top-color: #E7CD36;
+        }
+        
+        .product-card:nth-child(2):hover {
+            border-top-color: #E77436;
+            box-shadow: 0 20px 40px rgba(231, 205, 54, 0.3);
+        }
+        
+        .product-card:nth-child(3) {
+            border-top-color: #A9E736;
+        }
+        
+        .product-card:nth-child(3):hover {
+            border-top-color: #E7CD36;
+            box-shadow: 0 20px 40px rgba(169, 231, 54, 0.3);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .product-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+            transition: color 0.4s ease;
+        }
+        
+        .product-card:hover h3 {
+            color: #E77436;
+        }
+        
+        .product-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            transition: color 0.4s ease;
+        }
+        
+        .product-card:hover p {
+            color: #555;
+        }
+        
+        .price {
+            font-size: 2rem;
+            color: #E77436;
+            font-weight: bold;
+            margin: 15px 0;
+            transition: all 0.4s ease;
+        }
+        
+        .product-card:hover .price {
+            color: #A9E736;
+            transform: scale(1.1);
+        }
+        
+        button {
+            background: linear-gradient(45deg, #E77436, #E7CD36);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-family: 'Wendy One', sans-serif;
+        }
+        
+        button:hover {
+            background: linear-gradient(45deg, #A9E736, #E7CD36, #E77436);
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(169, 231, 54, 0.4);
+        }
+        
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .cart-content {
+            background: white;
+            margin: 50px auto;
+            padding: 30px;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 15px;
+            position: relative;
+            transition: all 0.4s ease;
+        }
+        
+        .cart-content:hover {
+            background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
+        }
+        
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #E77436;
+            transition: all 0.3s ease;
+        }
+        
+        .close:hover {
+            color: #A9E736;
+            transform: scale(1.2) rotate(90deg);
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+        
+        .cart-item:hover {
+            background: linear-gradient(45deg, #f8f8f8, #fff);
+            padding: 15px 10px;
+            border-radius: 8px;
+        }
+        
+        .total {
+            font-size: 1.5rem;
+            color: #E77436;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 20px;
+            transition: color 0.4s ease;
+        }
+        
+        .total:hover {
+            color: #A9E736;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #E77436, #E7CD36, #A9E736);
+            transition: width 0.3s ease;
+            z-index: 1001;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-indicator" id="scroll-indicator"></div>
+    
+    <nav class="navbar" id="navbar">
+        <div class="logo" onclick="scrollToSection('hero')">BenchPro</div>
+        <ul class="nav-links">
+            <li><a href="#" onclick="scrollToSection('hero')" class="active">Home</a></li>
+            <li><a href="#" onclick="scrollToSection('products')">Products</a></li>
+            <li><a href="#" onclick="scrollToSection('about')">About</a></li>
+            <li><a href="#" onclick="scrollToSection('contact')">Contact</a></li>
+        </ul>
+        <button class="cart-btn" onclick="openCart()">
+            🛒 Cart <span class="cart-count" id="cart-count">0</span>
+        </button>
+    </nav>
+    
+    <div class="hero" id="hero">
+        <h1>BenchPro</h1>
+        <p>Premium Accessories for Every Bench</p>
+        <div class="hero-subtitle">Transform any bench into the ultimate comfort zone</div>
+        <button class="hero-btn" onclick="scrollToSection('products')">Shop Now</button>
+    </div>
+    
+    <div class="section" id="products">
+        <h2>Our Products</h2>
+        <div class="products">
+            <div class="product-card">
+                <img src="bench-armrest.jpg" alt="Comfort Armrests" class="product-image">
+                <h3>Comfort Armrests</h3>
+                <p>Ergonomic armrests that attach to any bench for ultimate comfort</p>
+                <div class="price">$29.99</div>
+                <button onclick="addToCart('Comfort Armrests', 29.99)">Add to Cart</button>
+            </div>
+            
+            <div class="product-card">
+                <img src="bench-cushions.jpg" alt="Luxury Cushions" class="product-image">
+                <h3>Luxury Cushions</h3>
+                <p>Weather-resistant cushions in multiple colors for maximum comfort</p>
+                <div class="price">$39.99</div>
+                <button onclick="addToCart('Luxury Cushions', 39.99)">Add to Cart</button>
+            </div>
+            
+            <div class="product-card">
+                <img src="weather-cover.jpg" alt="Weather Covers" class="product-image">
+                <h3>Weather Covers</h3>
+                <p>Protect your bench from rain and sun with our durable covers</p>
+                <div class="price">$24.99</div>
+                <button onclick="addToCart('Weather Covers', 24.99)">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section" id="about">
+        <h2>About BenchPro</h2>
+        <p style="text-align: center; color: white; font-size: 1.2rem; line-height: 1.6;">
+            We specialize in premium bench accessories that transform ordinary seating into extraordinary comfort zones. 
+            Our products are designed with quality, durability, and style in mind.
+        </p>
+    </div>
+    
+    <div class="section" id="contact">
+        <h2>Contact Us</h2>
+        <p style="text-align: center; color: white; font-size: 1.2rem;">
+            📧 info@benchpro.com<br>
+            📞 (555) 123-BENCH<br>
+            📍 Boston, MA
+        </p>
+    </div>
+    
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-content">
+            <span class="close" onclick="closeCart()">×</span>
+            <h2>Your Cart</h2>
+            <div id="cart-items"></div>
+            <div class="total" id="cart-total">Total: $0.00</div>
+            <button class="checkout-btn" onclick="checkout()">Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        let total = 0;
+
+        // Scroll Effects
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            const scrollIndicator = document.getElementById('scroll-indicator');
+            const scrollTop = window.pageYOffset;
+            const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / documentHeight) * 100;
+            
+            // Update scroll indicator
+            scrollIndicator.style.width = scrollPercent + '%';
+            
+            // Add scrolled class to navbar
+            if (scrollTop > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            // Update active nav link
+            updateActiveNavLink();
+        });
+
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const navbar = document.getElementById('navbar');
+            const navbarHeight = navbar.offsetHeight;
+            const sectionTop = section.offsetTop - navbarHeight - 20;
+            
+            window.scrollTo({
+                top: sectionTop,
+                behavior: 'smooth'
+            });
+        }
+
+        function updateActiveNavLink() {
+            const sections = ['hero', 'products', 'about', 'contact'];
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const scrollTop = window.pageYOffset + 100;
+            
+            sections.forEach((sectionId, index) => {
+                const section = document.getElementById(sectionId);
+                if (section && scrollTop >= section.offsetTop && scrollTop < section.offsetTop + section.offsetHeight) {
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    navLinks[index].classList.add('active');
+                }
+            });
+        }
+
+        function addToCart(name, price) {
+            cart.push({name: name, price: price});
+            updateCartDisplay();
+            alert(name + " added to cart!");
+        }
+
+        function updateCartDisplay() {
+            document.getElementById('cart-count').textContent = cart.length;
+            
+            let cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            total = 0;
+            
+            cart.forEach((item, index) => {
+                total += item.price;
+                cartItems.innerHTML += `
+                    <div class="cart-item">
+                        <span>${item.name}</span>
+                        <span>$${item.price}</span>
+                        <button onclick="removeFromCart(${index})" style="background: #ff4444; padding: 5px 10px;">Remove</button>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('cart-total').textContent = `Total: $${total.toFixed(2)}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+        }
+
+        function openCart() {
+            document.getElementById('cart-modal').style.display = 'block';
+        }
+
+        function closeCart() {
+            document.getElementById('cart-modal').style.display = 'none';
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            alert(`Thank you for your purchase! Total: $${total.toFixed(2)}`);
+            cart = [];
+            updateCartDisplay();
+            closeCart();
+        }
+    </script>
+</body>
+</html>
